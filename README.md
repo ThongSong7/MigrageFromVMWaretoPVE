@@ -1,17 +1,17 @@
 # MigrageFromVMWaretoPVE
-Migrate Script to export VMWare Machines to OVF for import later in PVE
-This is for my personal use but I wanted to share too :-)
-If you feel that there could/can be improvements, please do!
+Migrate Script to export VMWare Machines to OVF for import later in PVE or other Virtual Environments that support OFV Templating
 
 This is based on ESXi 6.7, most VMs are version 4 and above
 
 --- Important ----
 
-This will only work when you extract ovftools from its installer and copy the entire folder to a datastore locally on ESX
-It would word also with a third-party server too, but it would be overkill as this is using the resoures of the ESX and is always on and 
-has local storage to use = I/O speed and no network unless to a NFS.
+This will only work when/if you extract ovftools from its installer and copy the entire folder to a datastore locally on ESX
+It would word also with a third-party server too, but it would be overkill as this is using the resoures of the ESX and is therefore always available and 
+has local storage to use = I/O speed and no network unless to NFS et al.
 
-How to copy and use ovftool to/on ESX? ==> https://williamlam.com/2012/05/how-to-deploy-ovfova-in-esxi-shell.html
+If you wish to use this via another server than the local ESXi, you must obviously adapt the script.
+
+How to install/copy/use ovftool to/on ESX? ==> https://williamlam.com/2012/05/how-to-deploy-ovfova-in-esxi-shell.html
 
 ---
 
