@@ -24,7 +24,7 @@ The script once ran locally on the ESXi will:
 - Find the VMID of the "NAME-of-VM"
 - Poll to see if NAME-of-VM is "on"
 - If NAME-of-VM is "on" then shutdown (to be able to use ovftool)
-- If NAME-of-VM is "off" will skip 10 seconds
+- If NAME-of-VM is "off" will skip 10 second-wait
 - Wait 10 seconds to allow graceful shutdown
 - Export "NAME-of-VM" as thin-formatted OVF to location of choice
 - Power (back)On NAME-of-VM
