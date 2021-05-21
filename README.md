@@ -17,14 +17,17 @@ How to copy and use ovftool to/on ESX? ==> https://williamlam.com/2012/05/how-to
 
 Usage:  ./export.sh NAME-of-VM
 
+*/ "NAME-of-VM" must be visible name of VM in ESX datastore (otherwise ovftool will not find it) /*
+
 The script once ran locally on the ESXi will:
 
-1. Find the VMID of the "NAME-of-VM"
-2. Poll to see if NAME-of-VM is "on"
-3. If NAME-of-VM is "on" = shutdown
-3a. Wait 10 seconds to allow graceful shutdown
-3b. Export "NAME-of-VM" as thin-formatted OVF to location of choice
-4. Power (back)On NAME-of-VM
+- Find the VMID of the "NAME-of-VM"
+- Poll to see if NAME-of-VM is "on"
+- If NAME-of-VM is "on" then shutdown (to be able to use ovftool)
+- If NAME-of-VM is "off" will skip 10 seconds
+- Wait 10 seconds to allow graceful shutdown
+- Export "NAME-of-VM" as thin-formatted OVF to location of choice
+- Power (back)On NAME-of-VM
 
 ---
 Later, import OVF into PVE or even other Environments (other ESXis too!)
