@@ -12,9 +12,9 @@ then
   vim-cmd vmsvc/power.shutdown $vmid
 # Wait till the VM is fully off
 echo "Waiting for machine $vmid to poweroff..."
-until [[ $state == off ]]
+until vim-cmd vmsvc/power.getstate $vmid | grep -i "off" > /dev/null 2<&1
 do
-  sleep 1
+  sleep 5
 done
   $ovftool/ovftool --noSSLVerify -dm=thin --parallelThreads=6 vi://root:ESXPASSWORDHERE@localhost/"$vm" $repo || vim-cmd vmsvc/power.on $vmid
   vim-cmd vmsvc/power.on $vmid
