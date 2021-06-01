@@ -1,5 +1,5 @@
 #!/bin/sh
-## To be ran on ESX
+## To execute on ESX
 ## Usage: ./export_vm.sh %VMNAME%
 vm=$1
 vmid=$(echo `vim-cmd vmsvc/getallvms | grep "$vm" | awk '{print $1}'`)
@@ -12,14 +12,14 @@ then
   vim-cmd vmsvc/power.shutdown $vmid
 # Wait till the VM is fully off
 echo "Waiting for machine $vmid to poweroff..."
-until vim-cmd vmsvc/power.getstate $vmid | grep -i "off" > /dev/null 2<&1
+until [[ $state == off ]]
 do
   sleep 1
 done
-  $ovftool/ovftool --noSSLVerify -dm=thin --parallelThreads=6 vi://root:PASSWORDHERE@localhost/"$vm" $repo || vim-cmd vmsvc/power.on $vmid
+  $ovftool/ovftool --noSSLVerify -dm=thin --parallelThreads=6 vi://root:ESXPASSWORDHERE@localhost/"$vm" $repo || vim-cmd vmsvc/power.on $vmid
   vim-cmd vmsvc/power.on $vmid
 else
-  $ovftool/ovftool --noSSLVerify -dm=thin --parallelThreads=6 vi://root:PASSWORDHERE@localhost/"$vm" $repo || vim-cmd vmsvc/power.on $vmid
+  $ovftool/ovftool --noSSLVerify -dm=thin --parallelThreads=6 vi://root:ESXPASSWORDHERE@localhost/"$vm" $repo || vim-cmd vmsvc/power.on $vmid
   vim-cmd vmsvc/power.on $vmid
 fi
 exit 0
