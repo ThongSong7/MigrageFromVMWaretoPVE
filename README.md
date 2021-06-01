@@ -25,9 +25,10 @@ The script once ran locally on the ESXi will:
 - Poll to see if NAME-of-VM is "on"
 - If NAME-of-VM is "on" then shutdown (to be able to use ovftool)
 - If NAME-of-VM is "off" will skip 10 second-wait
-- Wait 10 seconds to allow graceful shutdown
+- Wait until VM is powered off to avoid errors
 - Export "NAME-of-VM" as thin-formatted OVF to location of choice
 - Power (back)On NAME-of-VM
+- If in the process export does not work, restart machine
 
 ---
 Later, import OVF into PVE or even other Environments (other ESXis too!)
