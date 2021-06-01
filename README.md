@@ -35,4 +35,6 @@ Later, import OVF into PVE or even other Environments (other ESXis too!)
 
 I suppose that this could be an even more **ghetto** backup implementation too if ran via CRON?
 
+I am currently using this in tandem with ElkarBackup to perform nightly exports - still testing, but working so far :)
+
 Have fun!
