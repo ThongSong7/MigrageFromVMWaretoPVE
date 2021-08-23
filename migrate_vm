@@ -1,0 +1,33 @@
+#!/bin/sh
+## To be run on Proxmox Server with OVFTools installed      ##
+## Assumes you have ssh keys on ESX for passwordless login  ## 
+## Usage: ./migrate_vm %VMNAME_in_ESX%                      ##
+
+vm=$1
+ESX='IPADDRESSOFESX'
+PWD='ROOTPWDFORESX'
+vmid=$(ssh root@$ESX "echo `vim-cmd vmsvc/getallvms | grep "$vm" | awk '{print $1}'`")
+state=$(ssh root@$ESX "vim-cmd vmsvc/power.getstate $vmid | awk '{ print $2 }' | tail -n +2")
+ovftool=/root/vmware-ovftool
+repo=/var/lib/vz/images/"$vm"
+vmidprox=$(pvesh get /cluster/nextid)
+startup=$(ssh root@$ESX "vim-cmd vmsvc/power.on")
+shutdown=$(ssh root@$ESX "vim-cmd vmsvc/power.shutdown")
+
+if [[ $state == on ]]
+then
+  $shudown "$vmid"
+## Wait till the VM is fully off ##
+echo "Waiting for $vm to poweroff..."
+until $state | grep -i "off" > /dev/null 2<&1
+do
+  sleep 5
+done
+  $ovftool/ovftool --noSSLVerify -dm=thin --parallelThreads=6 vi://root:$PWD@$ESX/"$vm" $repo || $startup $vmid
+fi
+
+## Import NEW machine into PVE ##
+qm importovf "$vmidprox" "$repo"/"$vm"/"$vm".ovf local-lvm
+
+## Remove the imported OVF files ##
+rm -fr "$repo"/"$vm"
